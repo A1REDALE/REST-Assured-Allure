@@ -49,18 +49,3 @@ public class CreateCourierTest extends CourierClient {
     }
 }
 
-
-
-
-
-
-
-
-
-
-//"Недостаточно данных для создания учетной записи"
-
-
-    //assertThat().body("message", equalTo("Этот логин уже используется. Попробуйте другой."));
-//Courier courier = new Courier("ninja1457", "1234", "saskefwfefwf");
-//String json = "{\"login\": \"ninja1334446\", \"password\": \"1234\", \"firstName\": \"saskefwfefwf\"}";
