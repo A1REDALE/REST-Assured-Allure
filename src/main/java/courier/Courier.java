@@ -1,4 +1,5 @@
 package courier;
+import config.DataProvider;
 import org.apache.maven.surefire.shared.lang3.RandomStringUtils;
 
 public class Courier {
@@ -19,18 +20,18 @@ public class Courier {
         );
     }
     public static Courier getCourierWithoutLogin(){
-        return new Courier("",
+        return new Courier(DataProvider.getEmptyField(),
                 RandomStringUtils.randomAlphanumeric(10),
                 RandomStringUtils.randomAlphabetic(10));
     }
     public static Courier getCourierWithoutPassword(){
         return  new Courier(RandomStringUtils.randomAlphanumeric(10),
-                "",
+                DataProvider.getEmptyField(),
                 RandomStringUtils.randomAlphabetic(10));
     }
     public static Courier getCourierWithoutRequiredFields(){
-        return  new Courier("",
-                "",
+        return  new Courier(DataProvider.getEmptyField(),
+                DataProvider.getEmptyField(),
                 RandomStringUtils.randomAlphabetic(10));
     }
     public Courier() {
