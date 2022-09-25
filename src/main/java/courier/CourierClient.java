@@ -12,7 +12,7 @@ public class CourierClient {
     protected RequestSpecification getSpec(){
         return given().log().all()
                 .header("Content-type", "application/json")
-                .baseUri(Config.BASE_URL);
+                .baseUri(Config.getUrl());
     }
     public ValidatableResponse createCourier(Courier courier){
          return

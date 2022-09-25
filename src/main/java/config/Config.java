@@ -1,5 +1,9 @@
 package config;
 
 public class Config {
-    public static String BASE_URL = "http://qa-scooter.praktikum-services.ru";
+    private static final String BASE_URL = "http://qa-scooter.praktikum-services.ru";
+
+    public static String getUrl(){
+        return BASE_URL;
+    }
 }

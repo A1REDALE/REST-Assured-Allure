@@ -2,7 +2,6 @@ package order;
 import config.Config;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
-
 import static io.restassured.RestAssured.given;
 
 public class OrderClient{
@@ -13,7 +12,7 @@ public class OrderClient{
     protected RequestSpecification getSpec(){
         return given().log().all()
                 .header("Content-type", "application/json")
-                .baseUri(Config.BASE_URL);
+                .baseUri(Config.getUrl());
     }
     public ValidatableResponse orderCreate(Order order){
         return getSpec()
