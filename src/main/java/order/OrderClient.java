@@ -8,7 +8,7 @@ import static io.restassured.RestAssured.given;
 public class OrderClient{
     protected final String CREATE_ORDER = "/api/v1/orders";
     protected final String CANCEL_ORDER = "/api/v1/orders/cancel";
-    int track;
+
 
     protected RequestSpecification getSpec(){
         return given().log().all()
@@ -16,8 +16,7 @@ public class OrderClient{
                 .baseUri(Config.BASE_URL);
     }
     public ValidatableResponse orderCreate(Order order){
-        return
-                getSpec()
+        return getSpec()
                         .body(order)
                         .when()
                         .post(CREATE_ORDER)
