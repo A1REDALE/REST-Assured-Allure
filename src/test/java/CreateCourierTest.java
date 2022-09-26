@@ -1,23 +1,38 @@
 import courier.CourierClient;
 import courier.Courier;
+import courier.CourierCredentials;
+import org.junit.After;
 import org.junit.Test;
+
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertTrue;
 
 public class CreateCourierTest extends CourierClient {
+    private boolean isOk;
+    private Courier courier;
 
-    @Test
-   public  void checkCreateNewCourier(){
-        Courier courier = Courier.getRandomCourier();
-        boolean isOk = createCourier(courier)
-                .statusCode(201)
-                .extract().path("ok");
-                assertTrue(isOk);
+    @After
+    public void tearDown() {
+        if (isOk == true) {
+            CourierCredentials creds = CourierCredentials.from(courier);
+            int courierId = login(creds).extract().path("id");
+            delete(courierId);
+        }
+
     }
 
     @Test
-    public void cantCreateTwoIdenticalCouriers(){
-        Courier courier = new Courier("ninja1469", "1234", "saskefwfefwf");
+    public void checkCreateNewCourier() {
+        courier = Courier.getRandomCourier();
+        isOk = createCourier(courier)
+                .statusCode(201)
+                .extract().path("ok");
+        assertTrue(isOk);
+    }
+
+    @Test
+    public void cantCreateTwoIdenticalCouriers() {
+        courier = new Courier("ninja1469", "1234", "saskefwfefwf");
         createCourier(courier);
         createCourier(courier)
                 .statusCode(409)
@@ -25,24 +40,24 @@ public class CreateCourierTest extends CourierClient {
     }
 
     @Test
-    public void checkCreateCourierWithoutLogin(){
-        Courier courier = Courier.getCourierWithoutLogin();
+    public void checkCreateCourierWithoutLogin() {
+        courier = Courier.getCourierWithoutLogin();
         createCourier(courier)
                 .statusCode(400)
                 .assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }
 
     @Test
-    public void checkCreateCourierWithoutPassword(){
-        Courier courier = Courier.getCourierWithoutPassword();
+    public void checkCreateCourierWithoutPassword() {
+        courier = Courier.getCourierWithoutPassword();
         createCourier(courier)
                 .statusCode(400)
                 .assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }
 
     @Test
-    public void checkCreateCourierWithoutRequiredFields(){
-        Courier courier = Courier.getCourierWithoutRequiredFields();
+    public void checkCreateCourierWithoutRequiredFields() {
+        courier = Courier.getCourierWithoutRequiredFields();
         createCourier(courier)
                 .statusCode(400)
                 .assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));

@@ -1,7 +1,9 @@
 package courier;
+
 import config.Config;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+
 import static io.restassured.RestAssured.given;
 
 public class CourierClient {
@@ -9,20 +11,22 @@ public class CourierClient {
     private final String COURIER_ID = "/api/v1/courier/{courierId}";
     private final String LOGIN = "/api/v1/courier/login";
 
-    protected RequestSpecification getSpec(){
+    protected RequestSpecification getSpec() {
         return given().log().all()
                 .header("Content-type", "application/json")
                 .baseUri(Config.getUrl());
     }
-    public ValidatableResponse createCourier(Courier courier){
-         return
-                 getSpec()
-                         .body(courier)
-                         .when()
-                         .post(CREATE_COURIER)
-                         .then().log().all()
-                         .assertThat();
+
+    public ValidatableResponse createCourier(Courier courier) {
+        return
+                getSpec()
+                        .body(courier)
+                        .when()
+                        .post(CREATE_COURIER)
+                        .then().log().all()
+                        .assertThat();
     }
+
     public ValidatableResponse login(CourierCredentials creds) {
 
         return getSpec()
@@ -32,7 +36,8 @@ public class CourierClient {
                 .then().log().all()
                 .assertThat();
     }
-    public void delete(int courierId) { 
+
+    public void delete(int courierId) {
         getSpec()
                 .pathParam("courierId", courierId)
                 .when()

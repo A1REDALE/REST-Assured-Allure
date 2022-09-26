@@ -1,6 +1,6 @@
 package order;
 
-public class Order{
+public class Order {
     String firstName;
     String lastName;
     String address;
@@ -24,21 +24,28 @@ public class Order{
         this.color = color;
     }
 
-    public static Order getOrderWithBlackScooter(){
-        return new Order("Уаассся","Пупкин","Усачева,3",4,"+7 800 355 35 35",
-                4,"2022-09-29","Дверь мне запили", new String[]{"Black"});
+    public Order() {
+
     }
-    public static Order getOrderWithGreyScooter(){
-        return new Order("Уаассся","Пупкин","Усачева,3",4,"+7 800 355 35 35",
-                4,"2022-09-29","Дверь мне запили", new String[]{"Grey"});
+
+    public static Order getOrderWithBlackScooter() {
+        return new Order("Уаассся", "Пупкин", "Усачева,3", 4, "+7 800 355 35 35",
+                4, "2022-09-29", "Дверь мне запили", new String[]{"Black"});
     }
-    public static Order getOrderWithBothColors(){
-        return new Order("Уаассся","Пупкин","Усачева,3",4,"+7 800 355 35 35",
-                4,"2022-09-29","Дверь мне запили", new String[]{"Black, Grey"});
+
+    public static Order getOrderWithGreyScooter() {
+        return new Order("Уаассся", "Пупкин", "Усачева,3", 4, "+7 800 355 35 35",
+                4, "2022-09-29", "Дверь мне запили", new String[]{"Grey"});
     }
-    public static Order getOrderWithoutScooterColor(){
-        return new Order("Уаассся","Пупкин","Усачева,3",4,"+7 800 355 35 35",
-                4,"2022-09-29","Дверь мне запили",new  String[]{});
+
+    public static Order getOrderWithBothColors() {
+        return new Order("Уаассся", "Пупкин", "Усачева,3", 4, "+7 800 355 35 35",
+                4, "2022-09-29", "Дверь мне запили", new String[]{"Black, Grey"});
+    }
+
+    public static Order getOrderWithoutScooterColor() {
+        return new Order("Уаассся", "Пупкин", "Усачева,3", 4, "+7 800 355 35 35",
+                4, "2022-09-29", "Дверь мне запили", new String[]{});
     }
 }
 
