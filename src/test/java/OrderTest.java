@@ -1,6 +1,7 @@
 import order.Order;
 import order.OrderClient;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -9,10 +10,11 @@ import static org.junit.Assert.*;
 
 
 @RunWith(Parameterized.class)
-public class OrderTest extends OrderClient {
+public class OrderTest {
 
     private final Order checkedOrder;
     private int track;
+    OrderClient orderClient;
 
     public OrderTest(Order checkedOrder) {
         this.checkedOrder = checkedOrder;
@@ -27,18 +29,22 @@ public class OrderTest extends OrderClient {
                 {Order.getOrderWithoutScooterColor()},
         };
     }
+    @Before
+    public void setUp(){
+        orderClient = new OrderClient();
+    }
 
     @After
     public void tearDown() {
         if (track != 0) {
-            orderCancel(track);
+            orderClient.orderCancel(track);
         }
     }
 
     @Test
     public void createOrder() {
         Order order = checkedOrder;
-        track = orderCreate(order)
+        track = orderClient.orderCreate(order)
                 .statusCode(201)
                 .extract().path("track");
         assertNotEquals(0, track);
