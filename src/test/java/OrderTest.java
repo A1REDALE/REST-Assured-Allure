@@ -4,22 +4,23 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+
 import static org.junit.Assert.*;
 
 
 @RunWith(Parameterized.class)
 public class OrderTest extends OrderClient {
 
-    private final  Order checkedOrder;
+    private final Order checkedOrder;
     private int track;
 
-    public OrderTest(Order checkedOrder){
+    public OrderTest(Order checkedOrder) {
         this.checkedOrder = checkedOrder;
     }
 
     @Parameterized.Parameters
     public static Object[][] getTestData() {
-        return new Object[][] {
+        return new Object[][]{
                 {Order.getOrderWithBlackScooter()},
                 {Order.getOrderWithGreyScooter()},
                 {Order.getOrderWithBothColors()},
@@ -28,14 +29,15 @@ public class OrderTest extends OrderClient {
     }
 
     @After
-    public void tearDown(){
-        if(track !=0){
+    public void tearDown() {
+        if (track != 0) {
             orderCancel(track);
         }
     }
+
     @Test
-    public void createOrder(){
-        Order order =  checkedOrder;
+    public void createOrder() {
+        Order order = checkedOrder;
         track = orderCreate(order)
                 .statusCode(201)
                 .extract().path("track");

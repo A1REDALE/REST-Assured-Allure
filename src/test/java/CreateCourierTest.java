@@ -2,21 +2,28 @@ import courier.CourierClient;
 import courier.Courier;
 import courier.CourierCredentials;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertTrue;
 
-public class CreateCourierTest extends CourierClient {
+public class CreateCourierTest {
+    CourierClient courierClient;
     private boolean isOk;
     private Courier courier;
+
+    @Before
+    public void setUp() {
+        courierClient = new CourierClient();
+    }
 
     @After
     public void tearDown() {
         if (isOk == true) {
             CourierCredentials creds = CourierCredentials.from(courier);
-            int courierId = login(creds).extract().path("id");
-            delete(courierId);
+            int courierId = courierClient.login(creds).extract().path("id");
+            courierClient.delete(courierId);
         }
 
     }
@@ -24,7 +31,7 @@ public class CreateCourierTest extends CourierClient {
     @Test
     public void checkCreateNewCourier() {
         courier = Courier.getRandomCourier();
-        isOk = createCourier(courier)
+        isOk = courierClient.createCourier(courier)
                 .statusCode(201)
                 .extract().path("ok");
         assertTrue(isOk);
@@ -33,8 +40,8 @@ public class CreateCourierTest extends CourierClient {
     @Test
     public void cantCreateTwoIdenticalCouriers() {
         courier = new Courier("ninja1469", "1234", "saskefwfefwf");
-        createCourier(courier);
-        createCourier(courier)
+        courierClient.createCourier(courier);
+        courierClient.createCourier(courier)
                 .statusCode(409)
                 .assertThat().body("message", equalTo("Этот логин уже используется. Попробуйте другой."));
     }
@@ -42,7 +49,7 @@ public class CreateCourierTest extends CourierClient {
     @Test
     public void checkCreateCourierWithoutLogin() {
         courier = Courier.getCourierWithoutLogin();
-        createCourier(courier)
+        courierClient.createCourier(courier)
                 .statusCode(400)
                 .assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }
@@ -50,7 +57,7 @@ public class CreateCourierTest extends CourierClient {
     @Test
     public void checkCreateCourierWithoutPassword() {
         courier = Courier.getCourierWithoutPassword();
-        createCourier(courier)
+        courierClient.createCourier(courier)
                 .statusCode(400)
                 .assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }
@@ -58,7 +65,7 @@ public class CreateCourierTest extends CourierClient {
     @Test
     public void checkCreateCourierWithoutRequiredFields() {
         courier = Courier.getCourierWithoutRequiredFields();
-        createCourier(courier)
+        courierClient.createCourier(courier)
                 .statusCode(400)
                 .assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }

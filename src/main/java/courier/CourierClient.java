@@ -37,6 +37,7 @@ public class CourierClient {
                 .assertThat();
     }
 
+
     public void delete(int courierId) {
         getSpec()
                 .pathParam("courierId", courierId)

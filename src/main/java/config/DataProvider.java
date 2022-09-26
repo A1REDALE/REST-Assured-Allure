@@ -1,9 +1,9 @@
 package config;
 
 public class DataProvider {
-    private static final String EmptyField = "";
+    private static final String EMPTY_FIELD = "";
 
     public static String getEmptyField() {
-        return EmptyField;
+        return EMPTY_FIELD;
     }
 }
