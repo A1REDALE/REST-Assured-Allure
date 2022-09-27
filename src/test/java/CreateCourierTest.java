@@ -20,7 +20,7 @@ public class CreateCourierTest {
 
     @After
     public void tearDown() {
-        if (isOk == true) {
+        if (isOk) {
             CourierCredentials creds = CourierCredentials.from(courier);
             int courierId = courierClient.login(creds).extract().path("id");
             courierClient.delete(courierId);
@@ -39,8 +39,9 @@ public class CreateCourierTest {
 
     @Test
     public void cantCreateTwoIdenticalCouriers() {
-        courier = new Courier("ninja1469", "1234", "saskefwfefwf");
-        courierClient.createCourier(courier);
+        courier = new Courier("ninja1471", "1234", "saskefwfefwf");
+        isOk = courierClient.createCourier(courier).statusCode(201)
+                .extract().path("ok");
         courierClient.createCourier(courier)
                 .statusCode(409)
                 .assertThat().body("message", equalTo("Этот логин уже используется. Попробуйте другой."));

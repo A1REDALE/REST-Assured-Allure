@@ -18,13 +18,12 @@ public class CourierClient {
     }
 
     public ValidatableResponse createCourier(Courier courier) {
-        return
-                getSpec()
-                        .body(courier)
-                        .when()
-                        .post(CREATE_COURIER)
-                        .then().log().all()
-                        .assertThat();
+        return getSpec()
+                .body(courier)
+                .when()
+                .post(CREATE_COURIER)
+                .then().log().all()
+                .assertThat();
     }
 
     public ValidatableResponse login(CourierCredentials creds) {
